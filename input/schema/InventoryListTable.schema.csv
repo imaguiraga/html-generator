@@ -1,0 +1,13 @@
+"Acronym","Object Class","Property","Type","Format","Pattern","Title","Tag","Width","Height"
+"ACC","InventoryListTable",,"InventoryListTable",,,,,,
+"BCC","InventoryListTable","forReorder","string",,,"For Reorder",,"60.0","68.0"
+"BCC","InventoryListTable","inventoryId","string",,,"Inventory ID",,"104.0","68.0"
+"BCC","InventoryListTable","name","string",,,"Name",,"132.0","68.0"
+"BCC","InventoryListTable","description","string",,,"Description",,"132.0","68.0"
+"BCC","InventoryListTable","unitPrice","string",,,"Unit Price",,"88.0","68.0"
+"BCC","InventoryListTable","quantityInStock","string",,,"Quantity in Stock",,"88.0","68.0"
+"BCC","InventoryListTable","inventoryValue","string",,,"Inventory Value",,"88.0","68.0"
+"BCC","InventoryListTable","reorderLevel","string",,,"Reorder Level",,"88.0","68.0"
+"BCC","InventoryListTable","reorderTimeInDays","string",,,"Reorder Time in Days",,"88.0","68.0"
+"BCC","InventoryListTable","quantityInReorder","string",,,"Quantity in Reorder",,"88.0","68.0"
+"BCC","InventoryListTable","discontinued","string",,,"Discontinued?",,"104.0","68.0"

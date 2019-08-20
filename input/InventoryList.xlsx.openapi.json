@@ -1,0 +1,77 @@
+{
+  "schemas" : {
+    "InventoryListTable" : {
+      "type" : "object",
+      "properties" : {
+        "forReorder" : {
+          "title" : "For Reorder",
+          "type" : "string",
+          "x-width" : "60.0",
+          "x-height" : "68.0"
+        },
+        "inventoryId" : {
+          "title" : "Inventory ID",
+          "type" : "string",
+          "x-width" : "104.0",
+          "x-height" : "68.0"
+        },
+        "name" : {
+          "title" : "Name",
+          "type" : "string",
+          "x-width" : "132.0",
+          "x-height" : "68.0"
+        },
+        "description" : {
+          "title" : "Description",
+          "type" : "string",
+          "x-width" : "132.0",
+          "x-height" : "68.0"
+        },
+        "unitPrice" : {
+          "title" : "Unit Price",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "quantityInStock" : {
+          "title" : "Quantity in Stock",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "inventoryValue" : {
+          "title" : "Inventory Value",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "reorderLevel" : {
+          "title" : "Reorder Level",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "reorderTimeInDays" : {
+          "title" : "Reorder Time in Days",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "quantityInReorder" : {
+          "title" : "Quantity in Reorder",
+          "type" : "string",
+          "x-width" : "88.0",
+          "x-height" : "68.0"
+        },
+        "discontinued" : {
+          "title" : "Discontinued?",
+          "type" : "string",
+          "x-width" : "104.0",
+          "x-height" : "68.0"
+        }
+      },
+      "x-csv-data" : "data/InventoryListTable.data.csv",
+      "x-csv-schema" : "schema/InventoryListTable.schema.csv"
+    }
+  }
+}

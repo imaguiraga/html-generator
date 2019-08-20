@@ -1,0 +1,10 @@
+"Acronym","Object Class","Property","Type","Format","Pattern","Title","Tag","Width","Height"
+"ACC","CCTSLiteType",,"CCTSLiteType",,,,,,
+"BCC","CCTSLiteType","acronym","string",,,"acronym",,,
+"BCC","CCTSLiteType","objectClass","string",,,"objectClass",,,
+"BCC","CCTSLiteType","property","string",,,"property",,,
+"BCC","CCTSLiteType","type","string",,,"type",,,
+"BCC","CCTSLiteType","format","string",,,"format",,,
+"BCC","CCTSLiteType","pattern","string",,,"pattern",,,
+"BCC","CCTSLiteType","title","string",,,"title",,,
+"BCC","CCTSLiteType","tag","string",,,"tag",,,

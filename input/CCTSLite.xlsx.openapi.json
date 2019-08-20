@@ -1,0 +1,42 @@
+{
+  "schemas" : {
+    "CCTSLiteType" : {
+      "type" : "object",
+      "properties" : {
+        "acronym" : {
+          "title" : "acronym",
+          "type" : "string"
+        },
+        "objectClass" : {
+          "title" : "objectClass",
+          "type" : "string"
+        },
+        "property" : {
+          "title" : "property",
+          "type" : "string"
+        },
+        "type" : {
+          "title" : "type",
+          "type" : "string"
+        },
+        "format" : {
+          "title" : "format",
+          "type" : "string"
+        },
+        "pattern" : {
+          "title" : "pattern",
+          "type" : "string"
+        },
+        "title" : {
+          "title" : "title",
+          "type" : "string"
+        },
+        "tag" : {
+          "title" : "tag",
+          "type" : "string"
+        }
+      },
+      "x-csv-schema" : "schema/CCTSLiteType.schema.csv"
+    }
+  }
+}
