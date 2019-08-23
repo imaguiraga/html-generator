@@ -15,6 +15,12 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/team_imaguiraga/html-generator#readme",
   "dependencies": {
-    "nunjucks": "^3.2.0"
+    "chalk": "^2.4.2",
+    "chokidar": "^3.0.2",
+    "csvtojson": "^2.0.10",
+    "glob": "^7.1.4",
+    "mkdirp": "^0.5.1",
+    "nunjucks": "^3.2.0",
+    "yargs": "^14.0.0"
   }
 }

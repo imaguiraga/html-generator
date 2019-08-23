@@ -1,0 +1,14 @@
+{% set sep = joiner(',') %}
+{% set sep1 = joiner(',') %}
+const rows = [
+{% for item in rowData %}
+{{sep()}}  
+    {
+    {% for key, value in item %}
+    "{{key}}": {{value}} {{sep1()}}  
+    {% endfor %}
+    }  
+{% endfor %}
+];
+
+export default rows;

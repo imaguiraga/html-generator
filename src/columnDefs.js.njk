@@ -1,0 +1,14 @@
+{% set sep = joiner(',') %}
+const columns = [
+{%- for name, schema in schemas %}
+    {%- for key, value in schema.properties %}
+    {{sep()}}  
+    {
+        "headerName": "{{value.title}}",
+        "field": "{{key}}"
+    }
+    {% endfor %}
+{% endfor %}
+]
+
+export default columns;
