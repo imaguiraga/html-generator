@@ -5,9 +5,24 @@ const { resolve, basename, dirname, extname } = require('path')
 const nunjucks = require('nunjucks')
 
 const inputDir = './src'
+const context = {};
+// Enclose string with ""
+context.format = (value) => {
+    if(value){     
+        if((typeof value) === 'string'){
+            if(isNaN(value) === true){
+                return `"${value}"`;
+            }
+        } 
+        return value;
+      
+    } else {
+        return "null";
+    }
+};
 
 // Read Context file
-const context = JSON.parse(readFileSync('./input/InventoryList.xlsx.openapi.json', 'utf8'))
+context.columnData = JSON.parse(readFileSync('./input/InventoryList.xlsx.openapi.json', 'utf8'))
 console.log(context)
 // Expose environment variables to render context
 /*
@@ -27,29 +42,23 @@ for (let [key, value] of Object.entries(context.schemas)) {
 }
 //*/
 /** @type {nunjucks.ConfigureOptions} */
-const nunjucksOptions = { trimBlocks: true, lstripBlocks: true, noCache: true }
-
+const nunjucksOptions = { trimBlocks: true, lstripBlocks: true, noCache: true, autoescape: false }
 const nunjucksEnv = nunjucks.configure(inputDir, nunjucksOptions)
+
 // Render Template
 let res = nunjucksEnv.render('columnDefs.js.njk', context);
 console.log(res)
 
 // Read Context file 
+const csv=require('csvtojson')
 //const csvFilePath='./input/data/InventoryListTable.data.csv'
 const csvFilePath='./input/data/InventoryList.csv'
 
-const csv=require('csvtojson')
-const context1 = {}
-// Async / await usage
 csv()
 .fromFile(csvFilePath)
 .then((jsonObj)=>{
-    context1.rowData = jsonObj
-    //console.log(jsonObj);
-    res = nunjucksEnv.render('rowData.js.njk', context1);
+    context.rowData = jsonObj;
+    res = nunjucksEnv.render('rowData.js.njk', context);
     console.log(res)
 })
 //*/
-//const jsonArray = csv().fromFile(csvFilePath);
-//context1.rowData = jsonArray.result
-//console.log(context1)
