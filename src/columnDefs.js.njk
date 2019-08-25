@@ -1,12 +1,11 @@
-{% set sep = joiner(',') %}
 const columns = [
-{%- for name, schema in schemas %}
-    {%- for key, value in schema.properties %}
-    {{sep()}}  
+{% for name, schema in columnData.schemas %}
+    {% for key, value in schema.properties %}
     {
-        "headerName": "{{value.title}}",
-        "field": "{{key}}"
-    }
+      "headerName": {{'"' if value }}{{value.title if (value.title) else key}}{{'"' if value }},
+      "colId": {{ format(key) }},
+      "field": {{ format(key) }}
+    }{{"," if not loop.last }}
     {% endfor %}
 {% endfor %}
 ]
