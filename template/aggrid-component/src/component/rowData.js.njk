@@ -2,7 +2,7 @@ const rows = [
 {% for item in rowData %}
     {
     {% for key, value in item %}
-      "{{key}}": {{'"' if value }}{{ value if value else "null" }}{{'"' if value }} {{"," if not loop.last }}  
+      {{format(key)}}: {{ format(value) }} {{"," if not loop.last }}  
     {% endfor %}
     }{{"," if not loop.last }}  
 {% endfor %}

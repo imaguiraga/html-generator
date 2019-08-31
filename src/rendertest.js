@@ -5,25 +5,10 @@ const { resolve, basename, dirname, extname } = require('path')
 const nunjucks = require('nunjucks')
 
 const inputDir = './src'
-const context = {};
-// Enclose string with ""
-context.format = (value) => {
-    if(value){     
-        if((typeof value) === 'string'){
-            if(isNaN(value) === true){
-                return `"${value}"`;
-            }
-        } 
-        return value;
-      
-    } else {
-        return "null";
-    }
-};
 
 // Read Context file
-context.columnData = JSON.parse(readFileSync('./input/InventoryList.xlsx.openapi.json', 'utf8'))
-console.log(context)
+let definition = JSON.parse(readFileSync('./input/InventoryList.xlsx.openapi.json', 'utf8'))
+
 // Expose environment variables to render context
 /*
 context.env = process.env
@@ -41,24 +26,47 @@ for (let [key, value] of Object.entries(context.schemas)) {
     console.log(`${key}: ${value}`);
 }
 //*/
+function format(value){
+    if(value){     
+        if((typeof value) === 'string'){
+            if(isNaN(value) === true){
+                return `"${value}"`;
+            }
+        } 
+        return value;
+    
+    } else {
+        return "null";
+    }
+}
 /** @type {nunjucks.ConfigureOptions} */
 const nunjucksOptions = { trimBlocks: true, lstripBlocks: true, noCache: true, autoescape: false }
 const nunjucksEnv = nunjucks.configure(inputDir, nunjucksOptions)
 
-// Render Template
-let res = nunjucksEnv.render('columnDefs.js.njk', context);
-console.log(res)
+const csv2json = require('csvjson-csv2json');
 
-// Read Context file 
-const csv=require('csvtojson')
-//const csvFilePath='./input/data/InventoryListTable.data.csv'
-const csvFilePath='./input/data/InventoryList.csv'
-
-csv()
-.fromFile(csvFilePath)
-.then((jsonObj)=>{
-    context.rowData = jsonObj;
-    res = nunjucksEnv.render('rowData.js.njk', context);
+function render(){
+    const csvFilePath='./input/data/InventoryList.csv'
+    let results = csv2json(readFileSync(csvFilePath, 'utf8'));
+    let context = {}
+    context.format = format;
+    context.rowData = results;
+    console.log('rowData');
+    let res = nunjucksEnv.render('rowData.js.njk', context);
     console.log(res)
-})
-//*/
+}
+
+render();
+// Render Template
+console.log('columnDefs');
+for(let [key, schema] of Object.entries(definition.schemas)){
+    let context = {}
+    context.name = key;
+    context.schema = schema;
+    // Enclose string with ""
+    context.format = format;
+    let res = nunjucksEnv.render('columnDefs.js.njk', context);
+    console.log(res)
+}
+
+

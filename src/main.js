@@ -6,10 +6,10 @@ const nunjucks = require('nunjucks')
 const glob = require('glob')
 const mkdirp = require('mkdirp')
 const chalk = require('chalk').default
+const csv2json = require('csvjson-csv2json');
 
 const { argv } = require('yargs')
 	.usage('Usage: nunjucks -i<openapi schema location> -o <destination>')
-
 	.example('nunjucks -i src -o dist', 'Compile *.njk files in ./src, compile them to ./dist')
 	.epilogue('For more information on Nunjucks: https://mozilla.github.io/nunjucks/')
 	.help()
@@ -91,7 +91,7 @@ const copy = (
 	}
 }
 
-function renderFiles(
+function _renderFiles(
 	/** @type {string} */ filter, 
 	/** @type {Object} */ context, 
 	/** @type {string} */ templateDir, 
@@ -141,8 +141,72 @@ function copyFiles(
 		copy(files,context,templateDir,inputDir,outputDir)
 	})
 }
+// Enclose string with ""
+function format(value) {
+	if(value){     
+		if((typeof value) === 'string'){
+			if(isNaN(value) === true){
+				return `'${value}'`;
+			}
+		} 
+		return value;
+	
+	} else {
+		return "null";
+	}
+};
 
-function getContexts(/** @type {string} */ inputDir) {
+function createContexts(/** @type {string[]} */files){
+	let contexts = [] 
+	for (const file of files) {
+		// Parse openapi schema definition
+		let definition = JSON.parse(readFileSync(resolve(inputDir, file), 'utf8'));
+		// Create nunjuck context from schemas objects
+		for(let [key, schema] of Object.entries(definition.schemas)){
+			let context = {}
+			context.name = key;
+			context.schema = schema;
+			console.log(`${key}: ${schema}`);
+			// Parse data file if exists
+			if(schema['x-json-data']){
+				let datafile = schema['x-json-data'];
+				context.rowData = JSON.parse(readFileSync(resolve(inputDir, datafile), 'utf8'));
+
+			} else if(schema['x-csv-data']){
+				let datafile = schema['x-csv-data'];
+				// Convert csv to json
+				context.rowData = csv2json(readFileSync(resolve(inputDir, datafile), 'utf8'));
+			}
+			// @TODO read css file
+			// Enclose string with ""
+			context.format = (value) => {
+				if(value){     
+					if((typeof value) === 'string'){
+						if(isNaN(value) === true){
+							return `'${value}'`;
+						}
+					} 
+					return value;
+				
+				} else {
+					return "null";
+				}
+			};
+			// Append to contexts list
+			contexts.push(context);
+		}
+
+	}
+	return contexts;
+}
+
+function renderFiles(
+	/** @type {string} */ filter, 
+	/** @type {string} */ templateDir, 
+	/** @type {string} */ inputDir, 
+	/** @type {string} */ outputDir
+	) {
+	/** @type {Object[]} */
 	let contexts = [] 
 	/** @type {glob.IOptions} */
 	const globOptions = { 
@@ -152,15 +216,20 @@ function getContexts(/** @type {string} */ inputDir) {
 		nodir: true,
 		nobrace: false 
 	}
+
+	let pattern = '**/*.openapi.json';
 	// Copy the files given a glob pattern (except the ones starting with "_")
-	glob('**/*.openapi.json', globOptions, (err, files) => {
+	glob(pattern, globOptions, (err, files) => {
+	
 		if (err){ 
 			return console.error(chalk.red(err))
 		}
-		let context = JSON.parse(readFileSync(argv._[1], 'utf8'));
-		// TODO read csv file 
-		// TODO read css file
-		contexts.push(context);
+		contexts = createContexts(files);
+		contexts.forEach((/** @type {Object} */ context) => {	
+			// Comma separated list of extensions	
+			_renderFiles(filter,context,templateDir,inputDir,outputDir)
+		})
+		
 	})
 
 	return contexts
@@ -172,12 +241,7 @@ const inputDir = resolve(process.cwd(), argv.input) || ''
 const outputDir = argv.out || ''
 
 // Read each context files
-/** @type {Object[]} */
-const contexts = getContexts(inputDir)
 // Process all the contexts
-contexts.forEach((/** @type {Object} */ context) => {	
-	// Comma separated list of extensions
-	const filter = '**/*.njk';
-	copyFiles(filter,context,templateDir,inputDir,outputDir)
-	renderFiles(filter,context,templateDir,inputDir,outputDir)
-})
+const filter = '**/*.njk';
+copyFiles(filter,null,templateDir,inputDir,outputDir)
+renderFiles(filter,templateDir,inputDir,outputDir)
