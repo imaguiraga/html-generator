@@ -1,0 +1,15 @@
+/*
+const columns = [{key: 'name',header: 'Name'},
+    {key: 'protocol',header: 'Protocol'},
+    {key: 'port',header: 'Port'}];
+//*/
+const columns = [
+    {% for key, value in schema.properties %}
+    {
+      header: {{"'" if value }}{{value.title if (value.title) else key}}{{"'" if value }},
+      key: {{ format(key) }}
+    }{{"," if not loop.last }}
+    {% endfor %}
+]
+
+export default columns;
