@@ -1,6 +1,7 @@
 const rows = [
 {% for item in rowData %}
     {
+      id : '{{loop.index}}',
     {% for key, value in item %}
       {{key}}: {{ format(value) }} {{"," if not loop.last }}  
     {% endfor %}

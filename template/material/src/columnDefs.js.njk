@@ -1,26 +1,9 @@
-/*
-const columns = [{
-  attribute: 'title',
-  displayName: 'Title',
-  sortable: false
-}, {
-  attribute: 'instances',
-  sortable: true
-}, {
-  attribute: 'bar',
-  displayName: 'Bar',
-  sortable: true,
-  sortBy: function(value) { return -value; }
-}, {
-  attribute: 'unsortable',
-  sortable: false
-}];
-//*/
+
 const columns = [
     {% for key, value in schema.properties %}
     {
-      displayName: {{"'" if value }}{{value.title if (value.title) else key}}{{"'" if value }},
-      attribute: {{ format(key) }},
+      headerName: {{"'" if value }}{{value.title if (value.title) else key}}{{"'" if value }},
+      field: {{ format(key) }},
       sortable: true
     }{{"," if not loop.last }}
     {% endfor %}
