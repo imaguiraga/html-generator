@@ -1,3 +1,7 @@
+.bx--overflow-menu-options__option {
+  height: auto;
+}
+
 .App {
   text-align: center;
 }
