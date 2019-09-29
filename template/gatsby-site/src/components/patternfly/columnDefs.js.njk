@@ -1,0 +1,27 @@
+/*
+[
+  { title: 'Repositories', transforms: [sortable] },
+  'Branches',
+  { title: 'Pull requests', transforms: [sortable] },
+  'Workspaces',
+  'Last Commit'
+]
+//*/
+import {
+  sortable,
+  headerCol,
+  expandable,
+  cellWidth
+} from '@patternfly/react-table';
+
+const columns = [
+    {% for key, value in schema.properties %}
+    {
+      title: {{"'" if value }}{{value.title if (value.title) else key}}{{"'" if value }},
+      property: {{ format(key) }},
+      transforms: [sortable]
+    }{{"," if not loop.last }}
+    {% endfor %}
+]
+
+export default columns;
