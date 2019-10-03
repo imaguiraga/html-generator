@@ -1,0 +1,12 @@
+const rows = [
+{% for item in rowData %}
+  {cells: [
+  {% for key, value in item %}
+    {{ format(value) }} {{"," if not loop.last }}  
+  {% endfor %}
+    ]
+  }{{"," if not loop.last }}  
+{% endfor %}
+];
+
+export default rows;

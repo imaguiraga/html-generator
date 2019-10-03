@@ -102,10 +102,11 @@ function _renderFiles(
 	const globOptions = { 
 		strict: true, 
 		cwd: templateDir, 
-		ignore: ['**/_*.*','**/node_modules/**','package-lock.json'], 
+		ignore: ['**/_*.*','**/node_modules/**','package-lock.json','yarn.lock'], 
 		nonull: true, 
 		nodir: true,
-		nobrace: false 
+		nobrace: false,
+		dot: true 
 	}
 
 	// Render the files given a glob pattern (except the ones starting with "_")
@@ -128,10 +129,11 @@ function copyFiles(
 	const globOptions = { 
 		strict: true, 
 		cwd: templateDir, 
-		ignore: [filter,'**/node_modules/**','package-lock.json'], 
+		ignore: [filter,'**/node_modules/**','package-lock.json','yarn.lock'], 
 		nonull: true, 
 		nodir: true,
-		nobrace: false 
+		nobrace: false ,
+		dot: true
 	}
 	// Copy the files given a glob pattern (except the ones starting with "_")
 	glob('**/*', globOptions, (err, files) => {

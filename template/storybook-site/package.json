@@ -1,0 +1,53 @@
+{
+  "name": "storybook-site",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@carbon/icons": "^10.6.1",
+    "@carbon/icons-react": "^10.6.1",
+    "@material/checkbox": "^3.2.0",
+    "@material/data-table": "^3.2.0",
+    "@patternfly/react-core": "^3.112.3",
+    "@patternfly/react-table": "^2.22.19",
+    "ag-grid-community": "^21.2.2",
+    "ag-grid-react": "^21.2.2",
+    "carbon-components": "^10.6.4",
+    "carbon-components-react": "^7.6.4",
+    "carbon-icons": "^7.0.7",
+    "office-ui-fabric-react": "^7.43.0",
+    "pivotal-ui": "^18.1.8",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-scripts": "3.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/react": "^5.2.1"
+  }
+}
